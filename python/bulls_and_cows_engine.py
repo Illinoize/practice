@@ -1,42 +1,44 @@
+"""Installing random package"""
 import random
-from termcolor import cprint
 
 MAX_NUMBER = 4
+number_list = []
 
 
 def get_number():
-    global number_list
-    number_list = []
+    """Get random number"""
     number_list.append(random.randint(1, 9))
     while len(number_list) < MAX_NUMBER:
-        x = random.randint(0, 9)
-        if x not in number_list:
-            number_list.append(x)
+        random_int = random.randint(0, 9)
+        if random_int not in number_list:
+            number_list.append(random_int)
 
 
 def ask_number():
+    """Asking a number from user"""
     while True:
-        cprint('Введите четырехзначное число', color='white')
+        print('Введите четырехзначное число')
         user_input = input()
         set_user_input = set(user_input)
         if user_input.isdigit() is False:
-            cprint('Вы ввели не число', color='red')
+            print('Вы ввели не число')
         elif len(set_user_input) != len(user_input):
-            cprint('Вы ввели число с повторяющимися цифрами', color='red')
+            print('Вы ввели число с повторяющимися цифрами')
         elif str(user_input)[0] == '0':
-            cprint('Вы ввели число, начинающееся на ноль', color='red')
+            print('Вы ввели число, начинающееся на ноль')
         elif len(user_input) != MAX_NUMBER:
-            cprint('Вы ввели не четырехзначное число', color='red')
+            print('Вы ввели не четырехзначное число')
         else:
             return user_input
 
 
 def check_number(user_input):
+    """Checking two numbers"""
     user_number = list(str(user_input))
     total_number = {'bulls': 0, 'cows': 0}
-    for i, y in enumerate(user_number):
-        if int(y) in number_list:
-            if int(user_number[i]) == number_list[i]:
+    for i, number in enumerate(user_number):
+        if int(number) in number_list:
+            if int(number) == number_list[i]:
                 total_number['bulls'] += 1
             else:
                 total_number['cows'] += 1
@@ -45,4 +47,5 @@ def check_number(user_input):
 
 
 def is_end(total_number):
+    """function for the end of game"""
     return total_number['bulls'] == MAX_NUMBER
